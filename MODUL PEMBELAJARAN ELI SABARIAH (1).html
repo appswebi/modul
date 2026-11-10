@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran Pendidikan Pancasila Kelas VI SD/MI - Kurikulum Merdeka</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        merah: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS khusus untuk cetak/PDF yang rapi dan presisi */
+        @media print {
+            .no-print, header, aside, #mobileMenuBtn, #printModal { display: none !important; }
+            body { background-color: #ffffff !important; color: #000000 !important; font-size: 10.5pt; line-height: 1.5; margin: 0 !important; padding: 0 !important; }
+            .page-break { page-break-before: always; }
+            .card-box { border: 1px solid #cbd5e1 !important; box-shadow: none !important; break-inside: avoid; page-break-inside: avoid; margin-bottom: 1.5rem !important; }
+            .main-content { margin: 0 !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
+            details { display: block !important; }
+            details[open] summary, details summary { font-weight: bold; margin-bottom: 0.5rem; }
+            details > * { display: block !important; }
+            @page { margin: 1.5cm; size: A4 portrait; }
+            a { text-decoration: none !important; color: inherit !important; }
+        }
+
+        /* Class untuk mode bersih siap cetak di layar */
+        body.clean-print-mode .no-print { display: none !important; }
+        body.clean-print-mode .main-content { width: 100% !important; max-width: 900px !important; margin: 0 auto !important; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-red-100 selection:text-red-700">
+
+    <!-- TOP BAR / HEADER NAVIGASI INTERAKTIF (NO PRINT) -->
+    <header class="no-print sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-700 flex items-center justify-center text-white font-bold shadow-md shadow-red-200">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-900 text-sm sm:text-base leading-tight">Modul Pendidikan Pancasila</h1>
+                    <p class="text-xs text-slate-500 font-medium">Kelas VI SD/MI • Kurikulum Merdeka (Lengkap)</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button onclick="toggleCleanMode()" class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs sm:text-sm transition-all">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                    <span class="hidden md:inline" id="cleanModeText">Mode Bersih</span>
+                </button>
+                <button onclick="triggerPrint()" class="inline-flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium text-xs sm:text-sm transition-all shadow-sm hover:shadow-md">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Cetak / Simpan PDF</span>
+                </button>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 focus:outline-none">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MODAL PETUNJUK CETAK / FALLBACK (NO PRINT) -->
+    <div id="printModal" class="no-print fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center space-x-2 text-red-600 font-bold">
+                    <i data-lucide="printer" class="w-5 h-5"></i>
+                    <span>Panduan Cetak / PDF</span>
+                </div>
+                <button onclick="closePrintModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p>Jika dialog cetak browser tidak terbuka secara otomatis, Anda dapat mencetak atau menyimpan dokumen PDF dengan mudah melalui langkah berikut:</p>
+                <ol class="list-decimal list-inside space-y-1.5 font-medium text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <li>Tekan kombinasi tombol <strong>Ctrl + P</strong> (Windows) atau <strong>Cmd + P</strong> (Mac).</li>
+                    <li>Pada pilihan Printer / Destination, pilih <strong>"Save as PDF" / "Simpan sebagai PDF"</strong>.</li>
+                    <li>Atur ukuran kertas ke <strong>A4</strong> dan centang <em>"Background graphics"</em> agar warna dan border tercetak rapi.</li>
+                </ol>
+            </div>
+
+            <div class="pt-2 flex items-center justify-end space-x-2">
+                <button onclick="closePrintModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs sm:text-sm rounded-lg">Tutup</button>
+                <button onclick="executeNativePrint()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium text-xs sm:text-sm rounded-lg flex items-center gap-1.5">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Coba Cetak Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-8">
+        
+        <!-- SIDEBAR NAVIGASI DAFTAR ISI (NO PRINT) -->
+        <aside id="sidebarNav" class="no-print lg:w-72 shrink-0 hidden lg:block">
+            <div class="sticky top-24 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
+                <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800 font-bold text-sm">
+                    <i data-lucide="list-tree" class="w-4 h-4 text-red-600"></i>
+                    <span>Daftar Isi Modul</span>
+                </div>
+                
+                <nav class="space-y-1 text-xs sm:text-sm">
+                    <a href="#cover" class="block px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 hover:text-red-600 transition">Sampul & Identitas</a>
+                    <a href="#pengantar" class="block px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 hover:text-red-600 transition">Kata Pengantar</a>
+                    <a href="#bagian1" class="block px-3 py-1.5 rounded-lg font-medium text-slate-600 hover:bg-slate-100 hover:text-red-600 transition">Bagian I: Landasan</a>
+                    
+                    <div class="pt-2 pb-1 px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase">Semester 1</div>
+                    <a href="#bab1" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-700 transition">Bab 1: Sejarah Pancasila</a>
+                    <a href="#bab2" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-700 transition">Bab 2: Dasar & Pandangan Hidup</a>
+                    <a href="#bab3" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-700 transition">Bab 3: Norma, Hak & Kewajiban</a>
+                    <a href="#bab4" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-700 transition">Bab 4: Musyawarah & Kesepakatan</a>
+                    <a href="#eval1" class="block px-3 py-1.5 rounded-lg text-amber-700 bg-amber-50/60 font-semibold hover:bg-amber-100 transition">Evaluasi Akhir Semester 1</a>
+                    
+                    <div class="pt-3 pb-1 px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase">Semester 2</div>
+                    <a href="#bab5" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">Bab 5: Keberagaman Bhinneka</a>
+                    <a href="#bab6" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">Bab 6: Melestarikan Budaya</a>
+                    <a href="#bab7" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">Bab 7: Wilayah NKRI</a>
+                    <a href="#bab8" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition">Bab 8: Persatuan & Bela Negara</a>
+                    <a href="#eval2" class="block px-3 py-1.5 rounded-lg text-emerald-800 bg-emerald-50/60 font-semibold hover:bg-emerald-100 transition">Evaluasi Akhir Semester 2</a>
+
+                    <div class="pt-3 pb-1 px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase">Penilaian & Lampiran</div>
+                    <a href="#asesmen" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-red-600 transition">Bagian V: Asesmen & Rubrik</a>
+                    <a href="#refleksi" class="block px-3 py-1.5 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-red-600 transition">Bagian VI: Refleksi & Penutup</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="main-content flex-1 min-w-0 space-y-10">
+
+            <!-- COVER / SAMPUL MODUL -->
+            <section id="cover" class="bg-gradient-to-br from-red-800 via-red-700 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden card-box">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i data-lucide="shield" class="w-96 h-96 text-white"></i>
+                </div>
+
+                <div class="relative z-10 space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold uppercase tracking-wider text-red-200">
+                        <i data-lucide="award" class="w-4 h-4 text-amber-300"></i>
+                        <span>Kurikulum Merdeka • Fase C Kelas VI</span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
+                            BUKU MODUL PEMBELAJARAN<br>
+                            <span class="text-amber-400">PENDIDIKAN PANCASILA</span>
+                        </h1>
+                        <p class="text-sm sm:text-base text-red-100 font-light max-w-2xl">
+                            Bahan Ajar & Pendamping Kegiatan Pembelajaran Lengkap Semester 1 dan Semester 2 untuk SD / MI
+                        </p>
+                    </div>
+
+                    <!-- IDENTITAS TABEL CARD -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 max-w-2xl text-xs sm:text-sm grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <span class="text-red-200 block text-xs">Satuan Pendidikan</span>
+                            <strong class="text-white text-base">SD / MI</strong>
+                        </div>
+                        <div>
+                            <span class="text-red-200 block text-xs">Nama Sekolah</span>
+                            <strong class="text-white text-base">MI AL-BAROKAH</strong>
+                        </div>
+                        <div>
+                            <span class="text-red-200 block text-xs">Mata Pelajaran</span>
+                            <strong class="text-white text-base">Pendidikan Pancasila</strong>
+                        </div>
+                        <div>
+                            <span class="text-red-200 block text-xs">Kelas / Fase</span>
+                            <strong class="text-white text-base">VI (Enam) / C</strong>
+                        </div>
+                        <div>
+                            <span class="text-red-200 block text-xs">Penyusun / Guru</span>
+                            <strong class="text-white text-base">ELI SABARIAH, S.Pd.SD.</strong>
+                        </div>
+                        <div>
+                            <span class="text-red-200 block text-xs">Tahun Pelajaran</span>
+                            <strong class="text-white text-base">2026-2027</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KATA PENGANTAR -->
+            <section id="pengantar" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                    <div class="p-2.5 rounded-xl bg-red-50 text-red-600">
+                        <i data-lucide="quote" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900">Kata Pengantar</h2>
+                </div>
+
+                <div class="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed space-y-3">
+                    <p>Puji syukur ke hadirat Tuhan Yang Maha Esa atas rahmat dan karunia-Nya sehingga <strong>Buku Modul Pembelajaran Pendidikan Pancasila Kelas VI SD/MI</strong> ini dapat disusun.</p>
+                    <p>Buku modul ini disusun sebagai bahan pembelajaran bagi peserta didik dalam memahami nilai-nilai Pancasila, konstitusi, norma, hak dan kewajiban, keberagaman budaya, persatuan, serta kehidupan berbangsa dan bernegara.</p>
+                    <p>Pembelajaran dalam modul ini tidak hanya berorientasi pada penguasaan pengetahuan, tetapi juga diarahkan pada pembentukan sikap dan keterampilan peserta didik agar mampu menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari.</p>
+                    <p>Setiap bab dilengkapi dengan tujuan pembelajaran, materi, kegiatan, LKPD, latihan soal, dan kunci jawaban. Guru dapat menyesuaikan kedalaman materi, alokasi waktu, dan aktivitas dengan kebutuhan peserta didik serta ATP satuan pendidikan.</p>
+                    <p>Semoga buku modul ini bermanfaat bagi guru dan peserta didik dalam mewujudkan pembelajaran Pendidikan Pancasila yang bermakna.</p>
+                </div>
+
+                <div class="pt-4 flex justify-end text-sm text-slate-600 font-semibold italic">
+                    — Penyusun: ELI SABARIAH, S.Pd.SD.
+                </div>
+            </section>
+
+            <!-- BAGIAN I: IDENTITAS DAN LANDASAN PEMBELAJARAN -->
+            <section id="bagian1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                    <div class="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">BAGIAN I. Identitas dan Landasan Pembelajaran</h2>
+                        <p class="text-xs text-slate-500">Kerangka dan Pendekatan Kurikulum Merdeka</p>
+                    </div>
+                </div>
+
+                <!-- A. Identitas Modul Tabel -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="info" class="w-4 h-4 text-red-600"></i> A. Identitas Modul
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs sm:text-sm text-left border-collapse border border-slate-200">
+                            <thead class="bg-slate-100 text-slate-700">
+                                <tr>
+                                    <th class="border border-slate-200 p-2.5 w-1/3">Komponen</th>
+                                    <th class="border border-slate-200 p-2.5">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-slate-700">
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Satuan Pendidikan</td><td class="p-2.5">SD / MI</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Mata Pelajaran</td><td class="p-2.5">Pendidikan Pancasila</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Kelas / Fase</td><td class="p-2.5">VI / C</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Kurikulum</td><td class="p-2.5">Merdeka</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Semester</td><td class="p-2.5">1 dan 2</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Sasaran</td><td class="p-2.5">Peserta didik kelas VI</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Pendekatan</td><td class="p-2.5">Aktif, kontekstual, dan berpusat pada peserta didik</td></tr>
+                                <tr><td class="p-2.5 font-medium bg-slate-50">Model Pembelajaran</td><td class="p-2.5">Diskusi, proyek, demonstrasi, dan Problem Based Learning (PBL)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- B. Capaian Pembelajaran -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-red-600"></i> B. Capaian Pembelajaran (4 Elemen Fase C)
+                    </h3>
+                    <p class="text-xs text-slate-600">Modul ini mengacu pada empat elemen Capaian Pembelajaran Pendidikan Pancasila Fase C (berlaku untuk kelas V–VI; guru menyesuaikan urutan/kedalaman materi dengan ATP sekolah):</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <strong class="text-red-700 font-bold block mb-1">1. Pancasila</strong>
+                            <p class="text-slate-600">Peserta didik memahami sejarah kelahiran Pancasila, meneladani sikap para perumusnya, memahami hubungan antarsila, serta menjelaskan Pancasila sebagai dasar negara dan pandangan hidup bangsa.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <strong class="text-blue-700 font-bold block mb-1">2. UUD NRI Tahun 1945</strong>
+                            <p class="text-slate-600">Peserta didik menerapkan norma, hak, dan kewajiban; mengenal Pembukaan UUD NRI Tahun 1945; serta mempraktikkan musyawarah untuk membuat kesepakatan dan aturan bersama.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <strong class="text-emerald-700 font-bold block mb-1">3. Bhinneka Tunggal Ika</strong>
+                            <p class="text-slate-600">Peserta didik mengidentifikasi dan menunjukkan sikap menghormati, menjaga, serta melestarikan keberagaman budaya di lingkungan sekitar.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <strong class="text-amber-700 font-bold block mb-1">4. Negara Kesatuan Republik Indonesia</strong>
+                            <p class="text-slate-600">Peserta didik mengenal wilayah kabupaten/kota dan provinsi sebagai bagian dari NKRI serta menunjukkan perilaku gotong royong untuk menjaga persatuan sebagai wujud bela negara.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Tujuan Pembelajaran Umum -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="target" class="w-4 h-4 text-red-600"></i> C. Tujuan Pembelajaran Umum
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Menjelaskan proses sejarah lahirnya Pancasila dan meneladani sikap para perumusnya.</li>
+                        <li>Menjelaskan kedudukan dan makna Pancasila dalam kehidupan berbangsa dan bernegara.</li>
+                        <li>Mengidentifikasi norma, hak, dan kewajiban serta menerapkannya secara bertanggung jawab.</li>
+                        <li>Melaksanakan musyawarah dan menghargai keputusan bersama.</li>
+                        <li>Menghargai keberagaman suku, agama, bahasa, dan budaya.</li>
+                        <li>Menjelaskan pentingnya pelestarian budaya Indonesia.</li>
+                        <li>Mengenal wilayah administrasi NKRI dan lingkungan tempat tinggal.</li>
+                        <li>Mempraktikkan gotong royong, persatuan, dan perilaku cinta tanah air.</li>
+                    </ul>
+                </div>
+
+                <!-- D. Profil Pelajar Pancasila -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-red-600"></i> D. Profil Pelajar Pancasila
+                    </h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-3 py-1.5 rounded-lg bg-red-100 text-red-800 font-semibold">1. Beriman, bertakwalah kepada Tuhan YME, & berakhlak mulia</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-amber-100 text-amber-800 font-semibold">2. Berkebinekaan global</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-800 font-semibold">3. Bergotong royong</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-blue-100 text-blue-800 font-semibold">4. Mandiri</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-purple-100 text-purple-800 font-semibold">5. Bernalar kritis</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-pink-100 text-pink-800 font-semibold">6. Kreatif</span>
+                    </div>
+                </div>
+
+                <!-- E. Petunjuk Penggunaan Modul -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="book-open-check" class="w-4 h-4 text-red-600"></i> E. Petunjuk Penggunaan Modul
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                            <strong class="text-slate-900 font-bold block">Bagi Peserta Didik:</strong>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                                <li>Bacalah tujuan pembelajaran sebelum memulai materi.</li>
+                                <li>Pelajari materi secara berurutan dan perhatikan contoh kehidupan sehari-hari.</li>
+                                <li>Kerjakan aktivitas dan LKPD secara jujur dan bertanggung jawab.</li>
+                                <li>Diskusikan pertanyaan yang belum dipahami dengan guru atau teman.</li>
+                                <li>Kerjakan evaluasi secara mandiri dan lakukan refleksi.</li>
+                            </ol>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                            <strong class="text-slate-900 font-bold block">Bagi Guru:</strong>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                                <li>Sesuaikan pembelajaran dengan kebutuhan dan karakteristik peserta didik.</li>
+                                <li>Laksanakan asesmen awal untuk mengetahui kemampuan awal siswa.</li>
+                                <li>Gunakan metode dan media pembelajaran yang bervariasi.</li>
+                                <li>Berikan pendampingan dan pengayaan sesuai hasil asesmen.</li>
+                                <li>Laksanakan refleksi dan tindak lanjut pembelajaran.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== SEMESTER 1 ==================== -->
+            <div class="space-y-2 pt-6">
+                <div class="flex items-center space-x-3 text-red-700 font-extrabold text-lg sm:text-xl">
+                    <div class="h-7 w-2 bg-red-600 rounded-full"></div>
+                    <span>SEMESTER 1</span>
+                </div>
+                <p class="text-xs text-slate-500">Mencakup Bab 1 sampai Bab 4 & Evaluasi Semester 1</p>
+            </div>
+
+            <!-- BAB 1 -->
+            <section id="bab1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-red-600 text-white font-bold text-sm">BAB 1</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Sejarah Kelahiran Pancasila</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 1</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-red-50/60 rounded-xl p-4 border border-red-100 text-xs sm:text-sm text-red-900 space-y-1">
+                    <strong class="font-bold text-red-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan latar belakang lahirnya Pancasila.</li>
+                        <li>Menyebutkan tokoh-tokoh perumus Pancasila.</li>
+                        <li>Menjelaskan proses perumusan Pancasila.</li>
+                        <li>Meneladani sikap para pendiri bangsa.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-red-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Latar Belakang Lahirnya Pancasila</h4>
+                            <p>Sebelum merdeka, bangsa Indonesia mengalami penjajahan. Para tokoh menyadari bahwa kemerdekaan perlu dipersiapkan, termasuk dengan merumuskan dasar negara. Dasar negara menjadi pedoman dalam penyelenggaraan kehidupan berbangsa dan bernegara.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Sidang BPUPKI</h4>
+                            <p>BPUPKI adalah Badan Penyelidik Usaha-Usaha Persiapan Kemerdekaan Indonesia. Sidang pertama berlangsung pada <strong>29 Mei sampai 1 Juni 1945</strong> dan membahas dasar negara. Mohammad Yamin menyampaikan gagasan pada 29 Mei, Soepomo pada 31 Mei, dan Ir. Soekarno pada 1 Juni 1945. Dalam pidatonya, Soekarno memperkenalkan istilah Pancasila.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Panitia Sembilan dan Piagam Jakarta</h4>
+                            <p>Panitia Sembilan dibentuk untuk merumuskan naskah yang memuat rancangan dasar negara. Pada <strong>22 Juni 1945</strong>, panitia ini menghasilkan Piagam Jakarta, salah satu dokumen penting dalam proses perumusan Pembukaan UUD 1945.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Penetapan Pancasila</h4>
+                            <p>Indonesia memproklamasikan kemerdekaan pada <strong>17 Agustus 1945</strong>. Pada <strong>18 Agustus 1945</strong>, PPKI mengesahkan UUD 1945. Rumusan Pancasila tercantum dalam alinea keempat Pembukaan UUD 1945.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 space-y-1.5">
+                            <h4 class="font-bold text-sm">5. Rumusan Pancasila</h4>
+                            <p class="text-xs">Lima sila Pancasila adalah:</p>
+                            <ol class="list-decimal list-inside text-xs sm:text-sm font-medium space-y-1">
+                                <li>Ketuhanan Yang Maha Esa</li>
+                                <li>Kemanusiaan yang adil dan beradab</li>
+                                <li>Persatuan Indonesia</li>
+                                <li>Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan</li>
+                                <li>Keadilan sosial bagi seluruh rakyat Indonesia</li>
+                            </ol>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Sikap yang Dapat Diteladani</h4>
+                            <p>Para pendiri bangsa menunjukkan sikap rela berkorban, mengutamakan kepentingan bangsa, menghargai pendapat, mengutamakan persatuan, bertanggung jawab, dan menghormati perbedaan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-red-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Membuat garis waktu peristiwa 29 Mei, 31 Mei, 1 Juni, 22 Juni, 17 Agustus, dan 18 Agustus 1945.</li>
+                        <li>Diskusi kelompok: mengapa Indonesia membutuhkan dasar negara, mengapa tokoh bangsa bermusyawarah, dan sikap apa yang dapat diteladani.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-red-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Tuliskan tiga tokoh yang menyampaikan gagasan dasar negara.</li>
+                            <li>Jelaskan tugas Panitia Sembilan.</li>
+                            <li>Kapan Piagam Jakarta dirumuskan?</li>
+                            <li>Kapan Pancasila ditetapkan dalam Pembukaan UUD 1945?</li>
+                            <li>Tuliskan tiga sikap yang dapat diteladani dari para pendiri bangsa.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat poster bertema “Perjuangan Para Pendiri Bangsa dalam Merumuskan Pancasila”.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-red-600"></i> Asesmen / Latihan Soal Bab 1
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Hari Lahir Pancasila diperingati setiap tanggal ....<br><span class="pl-4 text-slate-600">a. 20 Mei | b. 1 Juni | c. 17 Agustus | d. 18 Agustus</span></li>
+                            <li>Tokoh yang memperkenalkan istilah Pancasila pada sidang BPUPKI adalah ....<br><span class="pl-4 text-slate-600">a. Mohammad Hatta | b. Soepomo | c. Ir. Soekarno | d. Ki Hajar Dewantara</span></li>
+                            <li>Piagam Jakarta dirumuskan oleh ....<br><span class="pl-4 text-slate-600">a. Panitia Sembilan | b. PPKI | c. KNIP | d. MPR</span></li>
+                            <li>PPKI mengesahkan UUD 1945 pada tanggal ....<br><span class="pl-4 text-slate-600">a. 1 Juni 1945 | b. 22 Juni 1945 | c. 17 Agustus 1945 | d. 18 Agustus 1945</span></li>
+                            <li>Sikap yang perlu diteladani dari para perumus Pancasila adalah ....<br><span class="pl-4 text-slate-600">a. Mementingkan diri sendiri | b. Memaksakan pendapat | c. Mengutamakan persatuan | d. Menghindari tanggung jawab</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan mengapa Pancasila penting bagi bangsa Indonesia.</li>
+                            <li>Sebutkan tiga sikap yang dapat kamu teladani dari para pendiri bangsa.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 1</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.b, 2.c, 3.a, 4.d, 5.c.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Pancasila penting karena menjadi pedoman dan dasar dalam menyelenggarakan kehidupan berbangsa dan bernegara. 2. Sikap rela berkorban, mengutamakan persatuan, dan menghargai perbedaan pendapat.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 2 -->
+            <section id="bab2" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-red-600 text-white font-bold text-sm">BAB 2</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Pancasila sebagai Dasar Negara dan Pandangan Hidup</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 1</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-red-50/60 rounded-xl p-4 border border-red-100 text-xs sm:text-sm text-red-900 space-y-1">
+                    <strong class="font-bold text-red-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan kedudukan Pancasila.</li>
+                        <li>Menguraikan makna setiap sila.</li>
+                        <li>Menjelaskan hubungan antarsila.</li>
+                        <li>Menerapkan nilai Pancasila dalam kehidupan sehari-hari.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-red-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pancasila sebagai Dasar Negara</h4>
+                            <p>Pancasila merupakan dasar negara Republik Indonesia. Penyelenggaraan kehidupan bernegara harus berpedoman pada nilai-nilai Pancasila. Peraturan dan kebijakan negara tidak boleh bertentangan dengan nilai dasar tersebut.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Pancasila sebagai Pandangan Hidup</h4>
+                            <p>Pandangan hidup adalah pedoman dalam menjalani kehidupan. Pancasila menjadi pedoman bangsa Indonesia dalam bersikap, bertindak, dan mengambil keputusan. Contohnya menghormati orang tua, menolong teman, bermusyawarah, menjaga persatuan, dan bersikap adil.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Makna Sila Pertama</h4>
+                            <p><em>Ketuhanan Yang Maha Esa</em> mengandung nilai keimanan, ketakwaan, dan toleransi. Contoh: beribadah sesuai agama masing-masing, menghormati teman yang berbeda agama, dan tidak memaksakan keyakinan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Makna Sila Kedua</h4>
+                            <p><em>Kemanusiaan yang adil dan beradab</em> mengajarkan kita menghargai martabat manusia dan memperlakukan orang lain secara adil. Contoh: menolong teman, tidak melakukan perundungan, dan menghormati orang lain.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Makna Sila Ketiga</h4>
+                            <p><em>Persatuan Indonesia</em> mengajarkan pentingnya menjaga persatuan. Contoh: menghargai perbedaan, mengikuti upacara dengan tertib, dan mengutamakan kepentingan bersama.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Makna Sila Keempat</h4>
+                            <p>Sila keempat mengajarkan musyawarah, kebijaksanaan, dan penghargaan terhadap pendapat. Contoh: memilih ketua kelas melalui kesepakatan dan tidak memaksakan kehendak.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">7. Makna Sila Kelima</h4>
+                            <p><em>Keadilan sosial</em> mengajarkan keadilan dan kesejahteraan bersama. Contoh: membagi tugas secara adil, tidak pilih kasih, dan menghargai hak orang lain.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">8. Hubungan Antarsila</h4>
+                            <p>Kelima sila merupakan satu kesatuan yang utuh dan saling berkaitan. Satu tindakan dapat mencerminkan beberapa nilai Pancasila sekaligus, misalnya menolong teman tanpa membedakan latar belakang.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-red-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Permainan tebak sila: guru menyampaikan perilaku, peserta didik menentukan sila yang sesuai dan menjelaskan alasannya.</li>
+                        <li>Diskusi contoh penerapan Pancasila di rumah, sekolah, dan masyarakat.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-red-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Berdoa sebelum belajar mencerminkan sila ke berapa?</li>
+                            <li>Menolong teman mencerminkan nilai sila apa?</li>
+                            <li>Mengikuti kerja bakti mencerminkan nilai apa?</li>
+                            <li>Bermusyawarah mencerminkan sila ke berapa?</li>
+                            <li>Membagi tugas dengan adil mencerminkan sila ke berapa?</li>
+                            <li>Amati kehidupan rumah dan sekolah, lalu tuliskan lima contoh penerapan Pancasila.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat tabel atau poster “Pancasila dalam Kehidupanku” yang berisi contoh nyata penerapan kelima sila.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-red-600"></i> Asesmen / Latihan Soal Bab 2
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Pancasila sebagai dasar negara berarti ....<br><span class="pl-4 text-slate-600">a. Hanya digunakan saat upacara | b. Menjadi pedoman penyelenggaraan negara | c. Hanya berlaku di sekolah | d. Hanya digunakan pemerintah daerah</span></li>
+                            <li>Menghormati teman yang berbeda agama merupakan pengamalan sila ....<br><span class="pl-4 text-slate-600">a. Pertama | b. Kedua | c. Ketiga | d. Kelima</span></li>
+                            <li>Menolong teman yang terjatuh mencerminkan sila ....<br><span class="pl-4 text-slate-600">a. Pertama | b. Kedua | c. Keempat | d. Kelima</span></li>
+                            <li>Pemilihan ketua kelas melalui musyawarah mencerminkan sila ....<br><span class="pl-4 text-slate-600">a. Pertama | b. Kedua | c. Keempat | d. Kelima</span></li>
+                            <li>Membagi tugas piket secara adil mencerminkan sila ....<br><span class="pl-4 text-slate-600">a. Pertama | b. Kedua | c. Ketiga | d. Kelima</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Apa arti Pancasila sebagai pandangan hidup bangsa?</li>
+                            <li>Berikan contoh penerapan sila ketiga di sekolah.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 2</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.b, 2.a, 3.b, 4.c, 5.d.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Pancasila sebagai pandangan hidup berarti dijadikan petunjuk arah dan pedoman dalam bertindak dan bersikap sehari-hari. 2. Mengikuti upacara bendera dengan tertib, bekerja sama tanpa membeda-bedakan suku/ras.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 3 -->
+            <section id="bab3" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-red-600 text-white font-bold text-sm">BAB 3</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Norma, Hak, dan Kewajiban</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 1</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-red-50/60 rounded-xl p-4 border border-red-100 text-xs sm:text-sm text-red-900 space-y-1">
+                    <strong class="font-bold text-red-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan pengertian norma.</li>
+                        <li>Mengidentifikasi macam-macam norma.</li>
+                        <li>Membedakan hak dan kewajiban.</li>
+                        <li>Menunjukkan perilaku bertanggung jawab.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-red-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pengertian Norma</h4>
+                            <p>Norma adalah aturan atau pedoman yang mengatur perilaku manusia dalam kehidupan masyarakat. Norma diperlukan agar kehidupan tertib, aman, dan harmonis.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Norma Agama</h4>
+                            <p>Norma agama bersumber dari ajaran agama. Contoh: menjalankan ibadah, berkata jujur, dan menjauhi perbuatan yang dilarang agama.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Norma Kesusilaan</h4>
+                            <p>Norma kesusilaan bersumber dari hati nurani manusia. Contoh: tidak berbohong, tidak mencuri, dan mengakui kesalahan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Norma Kesopanan</h4>
+                            <p>Norma kesopanan bersumber dari kebiasaan dan tata krama masyarakat. Contoh: menghormati orang tua, mengucapkan salam, dan berbicara sopan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Norma Hukum</h4>
+                            <p>Norma hukum dibuat oleh lembaga berwenang dan memiliki sanksi yang tegas. Contoh: mematuhi peraturan lalu lintas dan peraturan perundang-undangan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Pengertian Hak</h4>
+                            <p>Hak adalah sesuatu yang seharusnya diterima atau diperoleh seseorang. Hak siswa antara lain mendapatkan pendidikan, perlindungan, fasilitas belajar, dan perlakuan yang adil.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">7. Pengertian Kewajiban</h4>
+                            <p>Kewajiban adalah sesuatu yang harus dilakukan dengan penuh tanggung jawab. Kewajiban siswa antara lain belajar sungguh-sungguh, menghormati guru, menjaga kebersihan, dan menaati tata tertib.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">8. Keseimbangan Hak dan Kewajiban</h4>
+                            <p>Hak dan kewajiban harus dilaksanakan secara seimbang. Siswa berhak menggunakan perpustakaan, tetapi juga wajib menjaga buku dan fasilitas yang tersedia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-red-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Kelompok membuat daftar lima hak siswa, lima kewajiban siswa, dan lima aturan sekolah.</li>
+                        <li>Analisis kasus: siswa yang menuntut hak menggunakan fasilitas tetapi tidak mau menjaga kebersihan. Diskusikan kewajiban yang seharusnya dilakukan.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-red-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Lengkapi: mendapatkan pelajaran termasuk hak atau kewajiban?</li>
+                            <li>Mengerjakan tugas termasuk hak atau kewajiban?</li>
+                            <li>Mendapat perlindungan termasuk hak atau kewajiban?</li>
+                            <li>Menjaga kebersihan termasuk hak atau kewajiban?</li>
+                            <li>Menghormati guru termasuk hak atau kewajiban?</li>
+                            <li>Jelaskan apakah tindakan siswa yang merusak fasilitas sekolah dapat dibenarkan dan berikan alasannya.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat poster “Hak dan Kewajibanku di Sekolah” dengan minimal lima contoh untuk setiap kategori.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-red-600"></i> Asesmen / Latihan Soal Bab 3
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Aturan yang mengatur perilaku manusia disebut ....<br><span class="pl-4 text-slate-600">a. Hak | b. Norma | c. Hadiah | d. Hukuman</span></li>
+                            <li>Norma yang bersumber dari ajaran agama disebut ....<br><span class="pl-4 text-slate-600">a. Norma hukum | b. Norma kesopanan | c. Norma agama | d. Norma kebiasaan</span></li>
+                            <li>Sesuatu yang seharusnya diterima seseorang disebut ....<br><span class="pl-4 text-slate-600">a. Hak | b. Kewajiban | c. Larangan | d. Sanksi</span></li>
+                            <li>Contoh kewajiban siswa adalah ....<br><span class="pl-4 text-slate-600">a. Mendapatkan nilai | b. Memperoleh perlindungan | c. Mendapatkan pelajaran | d. Menaati tata tertib</span></li>
+                            <li>Hak dan kewajiban harus dilaksanakan secara ....<br><span class="pl-4 text-slate-600">a. Terpisah | b. Seimbang | c. Terpaksa | d. Tanpa aturan</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan perbedaan hak dan kewajiban.</li>
+                            <li>Sebutkan empat macam norma beserta satu contohnya.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 3</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.b, 2.c, 3.a, 4.d, 5.b.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Hak adalah hal yang wajib kita terima, sedangkan kewajiban adalah hal yang harus kita laksanakan dengan tanggung jawab. 2. Agama (ibadah), Kesusilaan (jujur), Kesopanan (menyapa), Hukum (patuh rambu).</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 4 -->
+            <section id="bab4" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-red-600 text-white font-bold text-sm">BAB 4</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Musyawarah dan Kesepakatan Bersama</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 1</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-red-50/60 rounded-xl p-4 border border-red-100 text-xs sm:text-sm text-red-900 space-y-1">
+                    <strong class="font-bold text-red-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan pengertian musyawarah.</li>
+                        <li>Mengetahui tujuan musyawarah.</li>
+                        <li>Menunjukkan sikap menghargai pendapat.</li>
+                        <li>Membuat kesepakatan bersama.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-red-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pengertian Musyawarah</h4>
+                            <p>Musyawarah adalah kegiatan membahas persoalan bersama untuk mencapai kesepakatan atau keputusan. Musyawarah merupakan salah satu penerapan sila keempat Pancasila.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Tujuan Musyawarah</h4>
+                            <p>Musyawarah bertujuan menyelesaikan masalah bersama, menghindari perselisihan, menghargai pendapat, menciptakan keputusan yang dapat diterima, dan menumbuhkan tanggung jawab.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Sikap dalam Musyawarah</h4>
+                            <p>Peserta musyawarah perlu menghargai pendapat, tidak memaksakan kehendak, berbicara sopan, mendengarkan, mengutamakan kepentingan bersama, dan menerima keputusan dengan tanggung jawab.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Pengambilan Keputusan</h4>
+                            <p>Keputusan sebaiknya dicapai melalui kesepakatan bersama. Jika kesepakatan belum tercapai, kelompok dapat menggunakan pemungutan suara sesuai aturan yang disepakati. Hasil keputusan dihormati dan dilaksanakan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Contoh Musyawarah</h4>
+                            <p>Musyawarah dapat dilakukan untuk menentukan ketua kelas, jadwal piket, tujuan kegiatan, pembagian tugas kerja bakti, dan aturan penggunaan fasilitas bersama.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-red-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Simulasi musyawarah kelas untuk merencanakan kegiatan kebersihan. Bahas pembagian tugas, jadwal, peralatan, dan penanggung jawab.</li>
+                        <li>Setiap kelompok mencatat proses dan hasil kesepakatan.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-red-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Apa yang dimaksud musyawarah?</li>
+                            <li>Mengapa kita harus menghargai pendapat orang lain?</li>
+                            <li>Apa yang harus dilakukan jika pendapat kita tidak diterima?</li>
+                            <li>Apa manfaat keputusan bersama?</li>
+                            <li>Tuliskan contoh musyawarah di rumah.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat aturan kelas melalui musyawarah. Tuliskan minimal lima kesepakatan dan cara melaksanakannya.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-red-600"></i> Asesmen / Latihan Soal Bab 4
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Musyawarah merupakan pengamalan sila ....<br><span class="pl-4 text-slate-600">a. Pertama | b. Kedua | c. Keempat | d. Kelima</span></li>
+                            <li>Sikap yang benar dalam musyawarah adalah ....<br><span class="pl-4 text-slate-600">a. Memaksakan pendapat | b. Menghargai pendapat | c. Marah ketika berbeda | d. Tidak mendengarkan</span></li>
+                            <li>Tujuan musyawarah adalah ....<br><span class="pl-4 text-slate-600">a. Mencari musuh | b. Menciptakan perselisihan | c. Mencari kesepakatan | d. Mengutamakan diri sendiri</span></li>
+                            <li>Jika keputusan telah disepakati, kita harus ....<br><span class="pl-4 text-slate-600">a. Mengabaikannya | b. Melaksanakannya | c. Menolaknya | d. Melupakannya</span></li>
+                            <li>Jika terjadi perbedaan pendapat, sebaiknya ....<br><span class="pl-4 text-slate-600">a. Bertengkar | b. Saling mengejek | c. Berdiskusi dengan baik | d. Meninggalkan kelompok</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan manfaat musyawarah dalam kehidupan sehari-hari.</li>
+                            <li>Sebutkan empat sikap yang harus dilakukan ketika bermusyawarah.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 4</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.c, 2.b, 3.c, 4.b, 5.c.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Masalah dapat terselesaikan dengan adil dan persatuan terjaga. 2. Mendengarkan teman, berbicara santun, tidak memaksakan kehendak, dan menerima keputusan bersama.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- EVALUASI AKHIR SEMESTER 1 -->
+            <section id="eval1" class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 space-y-6 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-800">
+                    <div class="p-2.5 rounded-xl bg-amber-400 text-slate-900">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-amber-400">EVALUASI AKHIR SEMESTER 1</h2>
+                        <p class="text-xs text-slate-400">Uji Kompetensi Bab 1 sampai Bab 4</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm text-slate-200">
+                    <p class="font-semibold text-amber-300">A. Pilihan Ganda (Pilihlah jawaban yang paling tepat):</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                        <li>Tokoh yang menyampaikan pidato tentang Pancasila pada 1 Juni 1945 adalah ....<br><span class="pl-4 text-slate-400">a. Mohammad Yamin | b. Ir. Soekarno | c. Soepomo | d. Mohammad Hatta</span></li>
+                        <li>Panitia Sembilan menghasilkan ....<br><span class="pl-4 text-slate-400">a. Proklamasi | b. Piagam Jakarta | c. Dekrit Presiden | d. Sumpah Pemuda</span></li>
+                        <li>PPKI mengesahkan UUD 1945 pada ....<br><span class="pl-4 text-slate-400">a. 1 Juni 1945 | b. 22 Juni 1945 | c. 17 Agustus 1945 | d. 18 Agustus 1945</span></li>
+                        <li>Pancasila sebagai pandangan hidup berarti ....<br><span class="pl-4 text-slate-400">a. Pedoman dalam kehidupan | b. Lambang sekolah | c. Aturan permainan | d. Hiasan negara</span></li>
+                        <li>Menolong teman yang kesulitan mencerminkan sila ....<br><span class="pl-4 text-slate-400">a. Pertama | b. Kedua | c. Ketiga | d. Keempat</span></li>
+                        <li>Norma yang bersumber dari ajaran agama disebut ....<br><span class="pl-4 text-slate-400">a. Norma hukum | b. Norma kesopanan | c. Norma agama | d. Norma adat</span></li>
+                        <li>Sesuatu yang harus dilakukan disebut ....<br><span class="pl-4 text-slate-400">a. Hak | b. Kewajiban | c. Keinginan | d. Hadiah</span></li>
+                        <li>Contoh hak siswa adalah ....<br><span class="pl-4 text-slate-400">a. Menjaga kebersihan | b. Mengerjakan tugas | c. Mendapatkan pendidikan | d. Menaati tata tertib</span></li>
+                        <li>Musyawarah merupakan pengamalan sila ....<br><span class="pl-4 text-slate-400">a. Pertama | b. Kedua | c. Ketiga | d. Keempat</span></li>
+                        <li>Ketika pendapat berbeda dengan teman, kita harus ....<br><span class="pl-4 text-slate-400">a. Marah | b. Menghargai pendapat | c. Mengejek | d. Memaksakan pendapat</span></li>
+                    </ol>
+
+                    <p class="font-semibold text-amber-300 pt-3">B. Soal Uraian:</p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-300">
+                        <li>Jelaskan proses singkat lahirnya Pancasila.</li>
+                        <li>Sebutkan lima sila Pancasila secara berurutan.</li>
+                        <li>Jelaskan perbedaan hak dan kewajiban.</li>
+                        <li>Sebutkan empat macam norma.</li>
+                        <li>Mengapa musyawarah penting dalam kehidupan sehari-hari?</li>
+                    </ol>
+
+                    <details class="text-xs text-slate-300 bg-slate-800 p-4 rounded-xl border border-slate-700 cursor-pointer">
+                        <summary class="font-semibold text-amber-400">Kunci Jawaban Evaluasi Akhir Semester 1</summary>
+                        <p class="mt-2 font-medium">Pilihan Ganda: 1.b, 2.b, 3.d, 4.a, 5.b, 6.c, 7.b, 8.c, 9.d, 10.b.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ==================== SEMESTER 2 ==================== -->
+            <div class="space-y-2 pt-8">
+                <div class="flex items-center space-x-3 text-emerald-700 font-extrabold text-lg sm:text-xl">
+                    <div class="h-7 w-2 bg-emerald-600 rounded-full"></div>
+                    <span>SEMESTER 2</span>
+                </div>
+                <p class="text-xs text-slate-500">Mencakup Bab 5 sampai Bab 8 & Evaluasi Semester 2</p>
+            </div>
+
+            <!-- BAB 5 -->
+            <section id="bab5" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-sm">BAB 5</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Keberagaman dalam Bingkai Bhinneka Tunggal Ika</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 2</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-emerald-50/60 rounded-xl p-4 border border-emerald-100 text-xs sm:text-sm text-emerald-900 space-y-1">
+                    <strong class="font-bold text-emerald-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan arti Bhinneka Tunggal Ika.</li>
+                        <li>Mengidentifikasi bentuk keberagaman Indonesia.</li>
+                        <li>Menunjukkan sikap toleransi.</li>
+                        <li>Menjaga kerukunan dalam perbedaan.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-emerald-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pengertian Bhinneka Tunggal Ika</h4>
+                            <p>Bhinneka Tunggal Ika berarti berbeda-beda tetapi tetap satu. Semboyan ini menggambarkan bahwa Indonesia memiliki banyak perbedaan, tetapi tetap bersatu sebagai satu bangsa.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Keberagaman Suku Bangsa</h4>
+                            <p>Indonesia memiliki banyak suku, antara lain Sunda, Jawa, Batak, Minangkabau, Dayak, Bugis, Bali, dan berbagai kelompok masyarakat di Papua.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Keberagaman Agama dan Kepercayaan</h4>
+                            <p>Masyarakat Indonesia memiliki agama dan kepercayaan yang beragam. Setiap orang harus menghormati kebebasan beragama sesuai ketentuan peraturan perundang-undangan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Keberagaman Bahasa</h4>
+                            <p>Setiap daerah memiliki bahasa daerah. Bahasa Indonesia digunakan sebagai bahasa persatuan dan sarana komunikasi antardaerah.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Keberagaman Budaya</h4>
+                            <p>Keberagaman budaya tampak pada pakaian adat, rumah adat, tarian, makanan tradisional, musik, dan kesenian daerah.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Sikap Menghargai Keberagaman</h4>
+                            <p>Sikap menghargai keberagaman meliputi tidak membeda-bedakan teman, menghormati perbedaan agama, menghargai bahasa daerah, tidak mengejek budaya lain, bekerja sama, dan menjaga kerukunan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">7. Manfaat dan Tantangan Keberagaman</h4>
+                            <p>Keberagaman memperkaya budaya, menambah pengetahuan, menumbuhkan toleransi, dan memperkuat persatuan. Persatuan dapat terganggu oleh diskriminasi, perundungan, permusuhan, berita bohong, dan sikap tidak menghargai perbedaan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Amati keberagaman di kelas, seperti bahasa daerah, makanan kesukaan, kebiasaan, atau budaya keluarga. Tegaskan bahwa perbedaan bukan alasan untuk merendahkan.</li>
+                        <li>Diskusikan contoh tindakan yang menjaga kerukunan di sekolah.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-emerald-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Jelaskan arti Bhinneka Tunggal Ika.</li>
+                            <li>Sebutkan lima suku bangsa di Indonesia.</li>
+                            <li>Mengapa kita harus menghormati perbedaan?</li>
+                            <li>Sebutkan tiga contoh sikap toleransi.</li>
+                            <li>Bagaimana cara menjaga persatuan di sekolah?</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat peta atau poster keberagaman Indonesia yang memuat minimal lima suku, bahasa daerah, dan unsur budaya.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> Asesmen / Latihan Soal Bab 5
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Arti Bhinneka Tunggal Ika adalah ....<br><span class="pl-4 text-slate-600">a. Bersatu kita teguh | b. Berbeda-beda tetapi tetap satu | c. Bersama membangun negara | d. Satu bangsa satu bahasa</span></li>
+                            <li>Bahasa persatuan bangsa Indonesia adalah ....<br><span class="pl-4 text-slate-600">a. Bahasa Jawa | b. Bahasa Sunda | c. Bahasa Indonesia | d. Bahasa Inggris</span></li>
+                            <li>Sikap yang tepat terhadap teman berbeda suku adalah ....<br><span class="pl-4 text-slate-600">a. Menjauhi | b. Mengejek | c. Menghormati | d. Membeda-bedakan</span></li>
+                            <li>Keberagaman budaya harus ....<br><span class="pl-4 text-slate-600">a. Dihilangkan | b. Dijaga dan dilestarikan | c. Dilupakan | d. Dipertentangkan</span></li>
+                            <li>Salah satu penyebab perpecahan adalah ....<br><span class="pl-4 text-slate-600">a. Toleransi | b. Gotong royong | c. Diskriminasi | d. Kerja sama</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan manfaat keberagaman bagi Indonesia.</li>
+                            <li>Sebutkan empat cara menjaga kerukunan dalam keberagaman.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 5</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.b, 2.c, 3.c, 4.b, 5.c.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Memperkaya kebudayaan dan menumbuhkan toleransi. 2. Bereman tanpa memandang perbedaan, tidak mengejek, menghormati peribadahan, dan saling tolong-menolong.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 6 -->
+            <section id="bab6" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-sm">BAB 6</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Menghormati dan Melestarikan Budaya Indonesia</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 2</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-emerald-50/60 rounded-xl p-4 border border-emerald-100 text-xs sm:text-sm text-emerald-900 space-y-1">
+                    <strong class="font-bold text-emerald-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Mengenali berbagai budaya Indonesia.</li>
+                        <li>Menjelaskan pentingnya budaya daerah.</li>
+                        <li>Menunjukkan sikap menghargai budaya.</li>
+                        <li>Berpartisipasi dalam pelestarian budaya.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-emerald-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pengertian Budaya</h4>
+                            <p>Budaya merupakan hasil cipta, rasa, dan karsa manusia yang berkembang dalam kehidupan masyarakat. Budaya diwariskan dari generasi ke generasi dan menjadi identitas kelompok masyarakat.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Rumah Adat</h4>
+                            <p>Contoh rumah adat antara lain Rumah Gadang dari Sumatera Barat, rumah Joglo dari Jawa, Honai dari Papua, dan Tongkonan dari Sulawesi Selatan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Pakaian Adat</h4>
+                            <p>Indonesia memiliki beragam pakaian adat, misalnya Baju Bodo dari Sulawesi Selatan dan Ulos yang dikenal dalam tradisi masyarakat Batak. Kebaya juga digunakan dalam berbagai tradisi daerah.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Tarian Daerah</h4>
+                            <p>Contoh tarian daerah adalah Tari Saman dari Aceh, Jaipong dari Jawa Barat, Kecak dari Bali, dan Tari Piring dari Sumatera Barat.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Alat Musik dan Makanan Tradisional</h4>
+                            <p>Contoh alat musik tradisional antara lain angklung dari Jawa Barat, sasando dari Nusa Tenggara Timur, kolintang dari Sulawesi Utara, dan gamelan dari berbagai daerah. Makanan tradisional antara lain rendang, gudeg, pempek, soto, dan papeda.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Pentingnya Melestarikan Budaya</h4>
+                            <p>Budaya merupakan kekayaan bangsa. Jika tidak dipelajari dan diwariskan, pengetahuan tentang budaya daerah dapat semakin berkurang.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">7. Cara Melestarikan Budaya</h4>
+                            <p>Cara melestarikan budaya antara lain mempelajari kesenian daerah, menggunakan bahasa daerah secara tepat, mengenal makanan tradisional, mengikuti kegiatan kebudayaan, mengunjungi museum, dan memperkenalkan budaya melalui media digital secara bertanggung jawab.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Pameran budaya: setiap kelompok memilih satu daerah dan menampilkan rumah adat, pakaian adat, tarian, makanan khas, serta bahasa daerah.</li>
+                        <li>Siswa mempresentasikan informasi dan menjelaskan cara menghargai budaya daerah tersebut.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-emerald-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Apa yang dimaksud budaya?</li>
+                            <li>Sebutkan tiga tarian tradisional Indonesia.</li>
+                            <li>Dari daerah manakah angklung berasal?</li>
+                            <li>Mengapa budaya harus dilestarikan?</li>
+                            <li>Tuliskan tiga kegiatan siswa untuk melestarikan budaya.</li>
+                            <li>Ceritakan salah satu budaya dari daerah tempat tinggalmu.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat poster atau stan pameran budaya daerah dengan informasi yang akurat dan gambar yang sesuai.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> Asesmen / Latihan Soal Bab 6
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Alat musik angklung berasal dari ....<br><span class="pl-4 text-slate-600">a. Jawa Barat | b. Papua | c. Bali | d. Aceh</span></li>
+                            <li>Tari Saman berasal dari ....<br><span class="pl-4 text-slate-600">a. Jawa Tengah | b. Aceh | c. Bali | d. Sumatera Barat</span></li>
+                            <li>Rumah Gadang berasal dari ....<br><span class="pl-4 text-slate-600">a. Jawa Timur | b. Kalimantan | c. Sumatera Barat | d. Papua</span></li>
+                            <li>Salah satu cara melestarikan budaya adalah ....<br><span class="pl-4 text-slate-600">a. Melupakan kesenian daerah | b. Mempelajari tarian tradisional | c. Mengejek budaya lain | d. Menghilangkan bahasa daerah</span></li>
+                            <li>Budaya perlu dilestarikan karena ....<br><span class="pl-4 text-slate-600">a. Merupakan identitas bangsa | b. Tidak memiliki manfaat | c. Menghambat persatuan | d. Tidak perlu diwariskan</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Mengapa generasi muda perlu mempelajari budaya daerah?</li>
+                            <li>Sebutkan lima contoh budaya Indonesia.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 6</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.a, 2.b, 3.c, 4.b, 5.a.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Agar kekayaan budaya bangsa tidak punah dan tetap menjadi kepribadian bangsa. 2. Angklung, Tari Saman, Rumah Gadang, Gudeg, Batik.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 7 -->
+            <section id="bab7" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-sm">BAB 7</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Wilayah Negara Kesatuan Republik Indonesia</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 2</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-emerald-50/60 rounded-xl p-4 border border-emerald-100 text-xs sm:text-sm text-emerald-900 space-y-1">
+                    <strong class="font-bold text-emerald-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan pengertian NKRI.</li>
+                        <li>Mengenal pembagian wilayah administrasi.</li>
+                        <li>Menjelaskan kedudukan daerah dalam NKRI.</li>
+                        <li>Menunjukkan rasa cinta tanah air.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-emerald-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Pengertian NKRI</h4>
+                            <p>NKRI adalah Negara Kesatuan Republik Indonesia. Indonesia merupakan negara kesatuan yang terdiri atas berbagai pulau, suku, budaya, dan masyarakat dalam satu negara. Kedaulatan negara berada dalam satu kesatuan pemerintahan nasional.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Wilayah Indonesia</h4>
+                            <p>Indonesia merupakan negara kepulauan di kawasan Asia Tenggara. Wilayah Indonesia terdiri atas daratan dan perairan serta memiliki kekayaan alam dan budaya yang beragam.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Pembagian Wilayah Administrasi</h4>
+                            <p>Secara umum, wilayah administrasi Indonesia terdiri atas provinsi, kabupaten atau kota, kecamatan, serta desa atau kelurahan. Setiap wilayah memiliki pemerintahan dan tugas sesuai ketentuan peraturan perundang-undangan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Mengenal Wilayah Tempat Tinggal</h4>
+                            <p>Peserta didik perlu mengenal nama desa/kelurahan, kecamatan, kabupaten/kota, provinsi, dan negara tempat tinggalnya. Pengetahuan ini membantu memahami bahwa daerah merupakan bagian dari NKRI.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Menjaga Keutuhan NKRI</h4>
+                            <p>Keutuhan NKRI dijaga dengan menghormati perbedaan, menaati hukum, menjaga persatuan, menghindari konflik, mengutamakan kepentingan bangsa, dan menghargai simbol negara.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Peserta didik membuat bagan wilayah tempat tinggal mulai dari desa/kelurahan hingga negara.</li>
+                        <li>Gunakan peta kabupaten/kota dan provinsi untuk mengenali letak daerah.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-emerald-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Apa kepanjangan NKRI?</li>
+                            <li>Apa yang dimaksud negara kesatuan?</li>
+                            <li>Sebutkan tingkatan wilayah administrasi di Indonesia.</li>
+                            <li>Mengapa kita harus menjaga keutuhan NKRI?</li>
+                            <li>Tuliskan tiga bentuk cinta tanah air.</li>
+                            <li>Lengkapi nama desa, kecamatan, kabupaten/kota, provinsi, dan negara tempat tinggalmu.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Buat peta sederhana atau bagan wilayah tempat tinggal dan tunjukkan hubungan wilayah tersebut sebagai bagian dari NKRI.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> Asesmen / Latihan Soal Bab 7
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>NKRI merupakan singkatan dari ....<br><span class="pl-4 text-slate-600">a. Negara Kesatuan Republik Indonesia | b. Negara Kerajaan Republik Indonesia | c. Negara Kebangsaan Republik Indonesia | d. Negara Kesatuan Rakyat Indonesia</span></li>
+                            <li>Indonesia merupakan negara ....<br><span class="pl-4 text-slate-600">a. Kerajaan | b. Kesatuan | c. Serikat | d. Koloni</span></li>
+                            <li>Wilayah yang dipimpin gubernur adalah ....<br><span class="pl-4 text-slate-600">a. Desa | b. Kecamatan | c. Provinsi | d. Kabupaten</span></li>
+                            <li>Pemimpin pemerintahan kabupaten adalah ....<br><span class="pl-4 text-slate-600">a. Gubernur | b. Bupati | c. Camat | d. Kepala desa</span></li>
+                            <li>Salah satu cara menjaga NKRI adalah ....<br><span class="pl-4 text-slate-600">a. Membeda-bedakan masyarakat | b. Menyebarkan permusuhan | c. Menjaga persatuan | d. Mengabaikan aturan</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan pengertian NKRI.</li>
+                            <li>Sebutkan tingkatan wilayah administrasi dari provinsi hingga desa atau kelurahan.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 7</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.a, 2.b, 3.c, 4.b, 5.c.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. NKRI adalah bentuk negara Indonesia yang utuh dan berdaulat. 2. Provinsi, Kabupaten/Kota, Kecamatan, dan Desa/Kelurahan.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAB 8 -->
+            <section id="bab8" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-sm">BAB 8</span>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Persatuan, Gotong Royong, dan Bela Negara</h2>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 font-medium">Semester 2</span>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="bg-emerald-50/60 rounded-xl p-4 border border-emerald-100 text-xs sm:text-sm text-emerald-900 space-y-1">
+                    <strong class="font-bold text-emerald-700 block mb-1 flex items-center gap-1.5">
+                        <i data-lucide="target" class="w-4 h-4"></i> A. Tujuan Pembelajaran
+                    </strong>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Menjelaskan arti persatuan dan kesatuan.</li>
+                        <li>Memahami manfaat gotong royong.</li>
+                        <li>Menjelaskan bela negara.</li>
+                        <li>Menunjukkan sikap cinta tanah air.</li>
+                    </ul>
+                </div>
+
+                <!-- Materi Lengkap -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="font-bold text-slate-900 text-base border-l-4 border-emerald-600 pl-3">B. Materi Pembelajaran</h3>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">1. Persatuan dan Kesatuan</h4>
+                            <p>Persatuan adalah keadaan bersatunya berbagai kelompok menjadi satu kesatuan. Kesatuan berarti keadaan utuh dan tidak terpecah belah. Persatuan penting karena masyarakat Indonesia memiliki banyak perbedaan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">2. Pengertian Gotong Royong</h4>
+                            <p>Gotong royong merupakan kegiatan bekerja bersama untuk mencapai tujuan bersama. Gotong royong mencerminkan sikap saling membantu, peduli, dan bertanggung jawab.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">3. Manfaat Gotong Royong</h4>
+                            <p>Gotong royong membuat pekerjaan lebih ringan, mempererat persaudaraan, menumbuhkan kepedulian, menciptakan lingkungan bersih, dan memperkuat persatuan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">4. Contoh Gotong Royong</h4>
+                            <p>Di rumah: membersihkan rumah dan membantu orang tua. Di sekolah: piket kelas, membersihkan lingkungan, dan membantu teman. Di masyarakat: kerja bakti, membantu korban bencana, dan menjaga kebersihan lingkungan.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">5. Pengertian Bela Negara</h4>
+                            <p>Bela negara merupakan sikap dan perilaku warga negara yang dijiwai kecintaan kepada NKRI berdasarkan Pancasila dan UUD NRI Tahun 1945. Bela negara tidak selalu dilakukan dengan mengangkat senjata.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">6. Bela Negara bagi Pelajar</h4>
+                            <p>Pelajar dapat menunjukkan bela negara dengan belajar rajin, mengikuti upacara, menghormati guru dan orang tua, menjaga nama baik sekolah, menaati peraturan, menjaga lingkungan, menghargai keberagaman, dan menggunakan media sosial secara bijak.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm">7. Persatuan pada Era Digital</h4>
+                            <p>Media digital memudahkan komunikasi, tetapi dapat digunakan untuk menyebarkan berita bohong, ujaran kebencian, dan informasi yang memecah belah. Siswa perlu memeriksa kebenaran informasi, tidak menyebarkan kabar yang belum jelas, menggunakan bahasa sopan, dan tidak melakukan perundungan daring.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Aktivitas Pembelajaran -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> C. Aktivitas Pembelajaran
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                        <li>Aksi gotong royong: bersihkan kelas atau lingkungan sekolah. Bagi tugas secara adil dan catat hasil kegiatan.</li>
+                        <li>Diskusikan contoh berita atau pesan digital yang perlu diperiksa sebelum dibagikan.</li>
+                    </ul>
+                </div>
+
+                <!-- D. LKPD -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="clipboard" class="w-4 h-4 text-emerald-600"></i> D. Lembar Kerja Peserta Didik (LKPD)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-2 border-b border-slate-200 text-slate-500 font-medium">
+                            <div>Nama: <span class="border-b border-slate-400 inline-block w-36"></span></div>
+                            <div>Kelas: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                            <div>Tanggal: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        </div>
+
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <li>Apa arti persatuan dan kesatuan?</li>
+                            <li>Apa yang dimaksud gotong royong?</li>
+                            <li>Sebutkan tiga manfaat gotong royong.</li>
+                            <li>Apa yang dimaksud bela negara?</li>
+                            <li>Tuliskan lima contoh bela negara yang dapat dilakukan pelajar.</li>
+                        </ol>
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-600">
+                            <strong>Tugas Proyek / Praktik:</strong> Laksanakan aksi gotong royong dan buat laporan berisi nama kegiatan, tujuan, pembagian tugas, hasil, serta manfaat. Buat juga slogan “Pelajar Bersatu, Indonesia Kuat”.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesmen / Latihan Soal -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> Asesmen / Latihan Soal Bab 8
+                    </h3>
+                    <div class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <p class="font-semibold text-slate-900">Pilihan Ganda:</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li>Gotong royong berarti ....<br><span class="pl-4 text-slate-600">a. Bekerja sendiri | b. Bekerja bersama | c. Menghindari pekerjaan | d. Menyuruh orang lain</span></li>
+                            <li>Salah satu manfaat gotong royong adalah ....<br><span class="pl-4 text-slate-600">a. Memperbesar perselisihan | b. Mempererat persaudaraan | c. Menambah permusuhan | d. Membuat pekerjaan lebih berat</span></li>
+                            <li>Contoh bela negara bagi pelajar adalah ....<br><span class="pl-4 text-slate-600">a. Membolos sekolah | b. Merusak fasilitas | c. Belajar dengan rajin | d. Melanggar aturan</span></li>
+                            <li>Sikap yang mencerminkan persatuan adalah ....<br><span class="pl-4 text-slate-600">a. Menghargai perbedaan | b. Mengejek teman | c. Memaksakan kehendak | d. Membuat permusuhan</span></li>
+                            <li>Ketika menerima berita yang belum jelas, kita sebaiknya ....<br><span class="pl-4 text-slate-600">a. Langsung menyebarkannya | b. Memeriksa kebenarannya | c. Mengubah isi berita | d. Menambahkan cerita</span></li>
+                        </ol>
+                        <p class="font-semibold text-slate-900 pt-2">Soal Uraian:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                            <li>Jelaskan manfaat gotong royong bagi kehidupan masyarakat.</li>
+                            <li>Sebutkan lima contoh bela negara yang dapat dilakukan siswa.</li>
+                        </ol>
+                    </div>
+
+                    <details class="text-xs text-slate-600 bg-slate-100 p-3 rounded-lg cursor-pointer">
+                        <summary class="font-semibold text-slate-800">Kunci Jawaban Bab 8</summary>
+                        <p class="mt-2"><strong>Pilihan Ganda:</strong> 1.b, 2.b, 3.c, 4.a, 5.b.</p>
+                        <p class="mt-1"><strong>Uraian:</strong> 1. Meringankan pekerjaan, menghemat waktu, dan mempererat tali silaturahmi. 2. Belajar sungguh-sungguh, patuh aturan, menjaga nama sekolah, mengikuti upacara, bijak bermedia sosial.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- EVALUASI AKHIR SEMESTER 2 -->
+            <section id="eval2" class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 space-y-6 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-800">
+                    <div class="p-2.5 rounded-xl bg-emerald-400 text-slate-900">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-emerald-400">EVALUASI AKHIR SEMESTER 2</h2>
+                        <p class="text-xs text-slate-400">Uji Kompetensi Bab 5 sampai Bab 8</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm text-slate-200">
+                    <p class="font-semibold text-emerald-300">A. Pilihan Ganda (Pilihlah jawaban yang paling tepat):</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                        <li>Arti Bhinneka Tunggal Ika adalah ....<br><span class="pl-4 text-slate-400">a. Berbeda-beda tetapi tetap satu | b. Bersatu dalam satu daerah | c. Berbeda dan terpisah | d. Satu budaya satu bangsa</span></li>
+                        <li>Bahasa persatuan bangsa Indonesia adalah ....<br><span class="pl-4 text-slate-400">a. Bahasa Sunda | b. Bahasa Jawa | c. Bahasa Indonesia | d. Bahasa Inggris</span></li>
+                        <li>Angklung merupakan alat musik tradisional dari ....<br><span class="pl-4 text-slate-400">a. Jawa Barat | b. Aceh | c. Papua | d. Bali</span></li>
+                        <li>Tari Saman berasal dari ....<br><span class="pl-4 text-slate-400">a. Bali | b. Aceh | c. Jawa Barat | d. Sumatera Barat</span></li>
+                        <li>Salah satu cara melestarikan budaya adalah ....<br><span class="pl-4 text-slate-400">a. Melupakan kesenian daerah | b. Mempelajari budaya daerah | c. Mengejek budaya lain | d. Menghilangkan bahasa daerah</span></li>
+                        <li>NKRI merupakan singkatan dari ....<br><span class="pl-4 text-slate-400">a. Negara Kesatuan Republik Indonesia | b. Negara Kebangsaan Republik Indonesia | c. Negara Kerajaan Republik Indonesia | d. Negara Kesatuan Rakyat Indonesia</span></li>
+                        <li>Wilayah yang dipimpin gubernur adalah ....<br><span class="pl-4 text-slate-400">a. Desa | b. Kecamatan | c. Provinsi | d. Kabupaten</span></li>
+                        <li>Gotong royong merupakan kegiatan ....<br><span class="pl-4 text-slate-400">a. Bekerja sendiri | b. Bekerja bersama | c. Menghindari tugas | d. Mengutamakan diri sendiri</span></li>
+                        <li>Contoh bela negara bagi pelajar adalah ....<br><span class="pl-4 text-slate-400">a. Merusak fasilitas sekolah | b. Tidak mengikuti aturan | c. Belajar dengan sungguh-sungguh | d. Membolos sekolah</span></li>
+                        <li>Salah satu cara menjaga persatuan adalah ....<br><span class="pl-4 text-slate-400">a. Menghormati perbedaan | b. Menyebarkan permusuhan | c. Mengejek teman | d. Membeda-bedakan orang</span></li>
+                    </ol>
+
+                    <p class="font-semibold text-emerald-300 pt-3">B. Soal Uraian:</p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-300">
+                        <li>Jelaskan arti Bhinneka Tunggal Ika.</li>
+                        <li>Sebutkan lima bentuk keberagaman di Indonesia.</li>
+                        <li>Mengapa budaya daerah perlu dilestarikan?</li>
+                        <li>Jelaskan pengertian NKRI.</li>
+                        <li>Sebutkan lima contoh bela negara yang dapat dilakukan pelajar.</li>
+                    </ol>
+
+                    <details class="text-xs text-slate-300 bg-slate-800 p-4 rounded-xl border border-slate-700 cursor-pointer">
+                        <summary class="font-semibold text-emerald-400">Kunci Jawaban Evaluasi Akhir Semester 2</summary>
+                        <p class="mt-2 font-medium">Pilihan Ganda: 1.a, 2.c, 3.a, 4.b, 5.b, 6.a, 7.c, 8.b, 9.c, 10.a.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- BAGIAN V: ASESMEN DAN PENILAIAN -->
+            <section id="asesmen" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                    <div class="p-2.5 rounded-xl bg-purple-50 text-purple-600">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">BAGIAN V. Asesmen dan Penilaian</h2>
+                        <p class="text-xs text-slate-500">Panduan Penilaian Lengkap Bagi Guru</p>
+                    </div>
+                </div>
+
+                <!-- A. Diagnostik -->
+                <div class="space-y-2">
+                    <h3 class="font-bold text-slate-900 text-sm">A. Asesmen Diagnostik</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Asesmen diagnostik dilaksanakan sebelum pembelajaran untuk mengetahui pengetahuan awal peserta didik. Contoh pertanyaan:</p>
+                    <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 space-y-1">
+                        <li>Apa yang kamu ketahui tentang Pancasila?</li>
+                        <li>Berapa jumlah sila Pancasila?</li>
+                        <li>Apa arti gotong royong?</li>
+                        <li>Apa yang dimaksud hak dan kewajiban?</li>
+                        <li>Apa arti Bhinneka Tunggal Ika?</li>
+                    </ul>
+                    <p class="text-xs text-slate-500 italic">Hasil asesmen digunakan untuk menentukan strategi pembelajaran dan kebutuhan pendampingan.</p>
+                </div>
+
+                <!-- B. Formatif -->
+                <div class="space-y-1 pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">B. Asesmen Formatif</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Asesmen formatif dilakukan selama proses pembelajaran melalui tanya jawab, diskusi kelompok, presentasi, hasil LKPD, pengamatan sikap, dan kuis singkat.</p>
+                </div>
+
+                <!-- C. Sumatif -->
+                <div class="space-y-1 pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">C. Asesmen Sumatif</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Asesmen sumatif dilakukan setelah peserta didik menyelesaikan satu bab atau satu semester. Bentuknya dapat berupa pilihan ganda, uraian, proyek, praktik, dan portofolio.</p>
+                </div>
+
+                <!-- D. Rubrik Pengetahuan -->
+                <div class="space-y-3 pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">D. Rubrik Penilaian Pengetahuan</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs sm:text-sm text-left border-collapse border border-slate-200">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700">
+                                    <th class="border border-slate-200 p-2.5">Rentang Nilai</th>
+                                    <th class="border border-slate-200 p-2.5">Kriteria</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border border-slate-200 p-2.5 font-bold text-emerald-700">90 – 100</td><td class="border border-slate-200 p-2.5">Sangat Baik</td></tr>
+                                <tr class="bg-slate-50"><td class="border border-slate-200 p-2.5 font-bold text-blue-700">80 – 89</td><td class="border border-slate-200 p-2.5">Baik</td></tr>
+                                <tr><td class="border border-slate-200 p-2.5 font-bold text-amber-700">70 – 79</td><td class="border border-slate-200 p-2.5">Cukup</td></tr>
+                                <tr class="bg-slate-50"><td class="border border-slate-200 p-2.5 font-bold text-red-700">Di bawah 70</td><td class="border border-slate-200 p-2.5">Perlu Bimbingan</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-slate-500 italic">Rumus nilai: (Jumlah jawaban benar ÷ jumlah soal) × 100. Guru dapat menyesuaikan kriteria ketercapaian tujuan pembelajaran dengan ketentuan satuan pendidikan.</p>
+                </div>
+
+                <!-- E. Rubrik Keterampilan -->
+                <div class="space-y-3 pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">E. Rubrik Penilaian Keterampilan</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse border border-slate-200">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700">
+                                    <th class="border border-slate-200 p-2">Aspek</th>
+                                    <th class="border border-slate-200 p-2">Skor 1</th>
+                                    <th class="border border-slate-200 p-2">Skor 2</th>
+                                    <th class="border border-slate-200 p-2">Skor 3</th>
+                                    <th class="border border-slate-200 p-2">Skor 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border border-slate-200 p-2 font-semibold">Kerja sama</td><td class="border border-slate-200 p-2">Belum terlihat</td><td class="border border-slate-200 p-2">Mulai berkembang</td><td class="border border-slate-200 p-2">Baik</td><td class="border border-slate-200 p-2 font-bold text-emerald-700">Sangat baik</td></tr>
+                                <tr class="bg-slate-50"><td class="border border-slate-200 p-2 font-semibold">Kreativitas</td><td class="border border-slate-200 p-2">Belum terlihat</td><td class="border border-slate-200 p-2">Mulai berkembang</td><td class="border border-slate-200 p-2">Baik</td><td class="border border-slate-200 p-2 font-bold text-emerald-700">Sangat baik</td></tr>
+                                <tr><td class="border border-slate-200 p-2 font-semibold">Komunikasi</td><td class="border border-slate-200 p-2">Belum terlihat</td><td class="border border-slate-200 p-2">Mulai berkembang</td><td class="border border-slate-200 p-2">Baik</td><td class="border border-slate-200 p-2 font-bold text-emerald-700">Sangat baik</td></tr>
+                                <tr class="bg-slate-50"><td class="border border-slate-200 p-2 font-semibold">Tanggung jawab</td><td class="border border-slate-200 p-2">Belum terlihat</td><td class="border border-slate-200 p-2">Mulai berkembang</td><td class="border border-slate-200 p-2">Baik</td><td class="border border-slate-200 p-2 font-bold text-emerald-700">Sangat baik</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-slate-500 italic">Nilai keterampilan = (total skor ÷ skor maksimal) × 100.</p>
+                </div>
+
+                <!-- F. Sikap -->
+                <div class="space-y-1 pt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">F. Penilaian Sikap</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Guru mengamati disiplin, tanggung jawab, kejujuran, toleransi, kerja sama, kepedulian, dan sikap menghargai pendapat. Catatan dapat menggunakan kategori: sangat berkembang, berkembang sesuai harapan, mulai berkembang, dan memerlukan bimbingan.</p>
+                </div>
+
+                <!-- G. Tindak Lanjut -->
+                <div class="space-y-2 pt-2 border-t border-slate-100 text-xs sm:text-sm text-slate-700">
+                    <h3 class="font-bold text-slate-900 text-sm">G. Tindak Lanjut</h3>
+                    <p><strong>Remedial:</strong> Peserta didik yang belum mencapai tujuan pembelajaran diberikan penjelasan ulang, pendampingan individu atau kelompok kecil, latihan tambahan, dan tugas perbaikan.</p>
+                    <p><strong>Pengayaan:</strong> Peserta didik yang telah mencapai tujuan pembelajaran diberikan tugas mencari informasi tambahan, proyek pengamatan lingkungan, pembuatan poster, atau presentasi hasil penelitian sederhana.</p>
+                </div>
+            </section>
+
+            <!-- BAGIAN VI: REFLEKSI DAN PENUTUP -->
+            <section id="refleksi" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 card-box">
+                <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                    <div class="p-2.5 rounded-xl bg-emerald-50 text-emerald-600">
+                        <i data-lucide="heart" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">BAGIAN VI. Refleksi dan Penutup</h2>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 text-xs sm:text-sm">
+                    <h3 class="font-bold text-slate-900">Refleksi Peserta Didik:</h3>
+                    <p class="text-slate-600">Setelah menyelesaikan pembelajaran, jawablah pertanyaan berikut dengan jujur:</p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-700">
+                        <li>Materi apa yang paling saya sukai?</li>
+                        <li>Materi apa yang masih sulit saya pahami?</li>
+                        <li>Apa manfaat pembelajaran Pendidikan Pancasila bagi kehidupan saya?</li>
+                        <li>Apakah saya sudah menerapkan nilai-nilai Pancasila? Berikan contoh.</li>
+                        <li>Apa yang akan saya perbaiki setelah mempelajari modul ini?</li>
+                    </ol>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs sm:text-sm">
+                    <h3 class="font-bold text-slate-900">Penutup:</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Pendidikan Pancasila bukan hanya pelajaran yang harus dipahami dan dihafalkan, melainkan pedoman dalam kehidupan sehari-hari.<br>
+                        Sebagai generasi penerus bangsa, peserta didik diharapkan mampu menerapkan nilai-nilai Pancasila melalui perilaku yang baik, menghargai perbedaan, menjaga persatuan, melaksanakan kewajiban, menghormati hak orang lain, serta mencintai tanah air.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-red-700 to-red-900 text-white text-center space-y-3">
+                    <p class="text-base sm:text-xl font-bold italic">
+                        “Berbeda-beda dalam keberagaman, bersatu dalam Pancasila, bersama membangun Indonesia.”
+                    </p>
+                </div>
+
+                <!-- Catatan Bagi Guru -->
+                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
+                    <strong class="font-bold text-amber-900 block mb-1">Catatan Penggunaan bagi Guru:</strong>
+                    <p class="leading-relaxed">
+                        Pembagian delapan bab ini merupakan rancangan modul operasional untuk kelas VI. Capaian Pembelajaran Fase C mencakup kelas V dan VI, sehingga guru perlu memeriksa ATP yang digunakan sekolah agar tidak terjadi pengulangan atau ketidaksesuaian urutan materi. Perbarui contoh budaya, wilayah, dan konteks lokal sesuai lingkungan peserta didik. Kunci jawaban pilihan ganda disediakan; jawaban uraian dinilai berdasarkan ketepatan isi, kelengkapan, alasan, dan contoh yang relevan.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- SCRIPT UTAMA UNTUK INTERAKSI UI -->
+    <script>
+        // Inisialisasi Ikon Lucide
+        lucide.createIcons();
+
+        // Navigasi Menu Mobile Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebarNav = document.getElementById('sidebarNav');
+
+        if(mobileMenuBtn && sidebarNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebarNav.classList.toggle('hidden');
+            });
+        }
+
+        // --- MANAJEMEN CETAK & PDF INTERAKTIF ---
+        function prepareDetailsForPrint(expand) {
+            const detailsElements = document.querySelectorAll('details');
+            detailsElements.forEach(detail => {
+                if (expand) {
+                    detail.setAttribute('data-was-open', detail.hasAttribute('open'));
+                    detail.setAttribute('open', 'true');
+                } else {
+                    if (detail.getAttribute('data-was-open') === 'false') {
+                        detail.removeAttribute('open');
+                    }
+                    detail.removeAttribute('data-was-open');
+                }
+            });
+        }
+
+        function triggerPrint() {
+            prepareDetailsForPrint(true);
+            
+            try {
+                window.focus();
+                // Delay 150ms agar DOM membuka seluruh elemen <details> sebelum pencetakan
+                setTimeout(() => {
+                    window.print();
+                }, 150);
+            } catch (e) {
+                console.warn("Print error or blocked:", e);
+                showPrintModal();
+            }
+        }
+
+        function executeNativePrint() {
+            closePrintModal();
+            setTimeout(() => {
+                window.print();
+            }, 100);
+        }
+
+        function showPrintModal() {
+            const modal = document.getElementById('printModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closePrintModal() {
+            const modal = document.getElementById('printModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function toggleCleanMode() {
+            document.body.classList.toggle('clean-print-mode');
+            const cleanText = document.getElementById('cleanModeText');
+            if (cleanText) {
+                if (document.body.classList.contains('clean-print-mode')) {
+                    cleanText.textContent = 'Kembali ke Normal';
+                } else {
+                    cleanText.textContent = 'Mode Bersih';
+                }
+            }
+        }
+
+        // Kembalikan kondisi accordion kunci jawaban setelah selesai dicetak
+        window.addEventListener('afterprint', () => {
+            prepareDetailsForPrint(false);
+        });
+    </script>
+</body>
+</html>
